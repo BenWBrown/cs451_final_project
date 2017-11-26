@@ -33,14 +33,28 @@ def readfile(data_file):
     return (data,labels)
 
 def extract_features(row):
-    """takes a row of data as a dictionary mapping column header to column value
-    returns label as an integer (negative -> -1, neutral -> 0, positive -> 1)
-    returns data as a numpy array of floats
-    """
-    label = 1 if row['airline_sentiment'] == 'positive' else \
-            0 if row['airline_sentiment'] == 'neutral' else -1
+    """takes a row and extracts the data and the label"""
+    label = extract_label(row)
+    text = extract_text(row)
+    data = vectorize(text)
 
-    return np.zeros(1), label
+    return data, label
+
+def extract_label(row):
+    """extracts a label from a data row.
+    if the dataset is changed, this needs to be refactored"""
+    return 1 if row['airline_sentiment'] == 'positive' else \
+           0 if row['airline_sentiment'] == 'neutral' else -1
+
+def extract_text(row):
+    """extracts the tweet text from row data.
+    if the dataset is changed, this needs to be refactored"""
+    return row['text']
+
+def vectorize(text):
+    """vectorizes tweet text into a numpy array.
+    This function is independent of the dataset"""
+    return np.zeros(1)
 
 if __name__ == "__main__":
     main()
