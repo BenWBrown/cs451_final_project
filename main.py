@@ -26,7 +26,8 @@ def main():
         train_test_split(data, labels, test_size=test_size, random_state=42)
 
     tree.train(data_train, labels_train)
-    tree.predict(data_test)
+    labels_pred = tree.predict(data_test)
+    compute_metrics(labels_test, labels_pred)
 
 def readfile(data_file):
     """Read in Kaggle dataset (Tweets.csv) and output tuple containing
@@ -65,6 +66,10 @@ def vectorize(text):
     This function is independent of the dataset"""
     #TODO
     return np.zeros(1)
+
+def compute_metrics(labels_test, labels_pred):
+    acc = sum([int(x == y) for x, y in zip(labels_test, labels_pred)]) / float(len(labels_test))
+    print ("Accuracy: {}".format(acc))
 
 if __name__ == "__main__":
     main()

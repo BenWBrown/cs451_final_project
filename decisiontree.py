@@ -13,4 +13,4 @@ class DecisionTree:
     def predict(self, data):
         """predicts labels for given data"""
         #TODO
-        pass
+        return [1] * len(data)
