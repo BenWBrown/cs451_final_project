@@ -12,12 +12,21 @@ code that imports our decision tree, trains it on a dataset, then tests on a val
 
 import csv
 import numpy as np
+from sklearn.model_selection import train_test_split
+from decisiontree import DecisionTree
 
 #globals
 data_file = 'Tweets.csv'
+test_size = 0.3
 
 def main():
     data, labels = readfile(data_file)
+    tree = DecisionTree()
+    data_train, data_test, labels_train, labels_test = \
+        train_test_split(data, labels, test_size=test_size, random_state=42)
+
+    tree.train(data_train, labels_train)
+    tree.predict(data_test)
 
 def readfile(data_file):
     """Read in Kaggle dataset (Tweets.csv) and output tuple containing
@@ -30,7 +39,6 @@ def readfile(data_file):
             x, y = extract_features(row)
             data.append(x)
             labels.append(y)
-        print (labels[:5])
     return (data,labels)
 
 def extract_features(row):
