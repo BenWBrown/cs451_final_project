@@ -21,7 +21,7 @@ test_size = 0.3
 
 def main():
     data, labels = readfile(data_file)
-    tree = DecisionTree()
+    tree = DecisionTree() #todo: some sort of hyper-params
     data_train, data_test, labels_train, labels_test = \
         train_test_split(data, labels, test_size=test_size, random_state=42)
 
@@ -40,6 +40,7 @@ def readfile(data_file):
             x, y = extract_features(row)
             data.append(x)
             labels.append(y)
+        #print (data[0])
     return (data,labels)
 
 def extract_features(row):
@@ -47,6 +48,9 @@ def extract_features(row):
     label = extract_label(row)
     text = extract_text(row)
     data = vectorize(text)
+
+    airline_data = extract_airline(row)
+    data = np.append(airline_data, data)
 
     return data, label
 
@@ -65,7 +69,17 @@ def vectorize(text):
     """vectorizes tweet text into a numpy array.
     This function is independent of the dataset"""
     #TODO
-    return np.zeros(1)
+    return np.ones(3) * 2
+
+def extract_airline(row):
+    airlines = ['Virgin America', 'United', 'Southwest', 'Delta', 'US Airways', 'American']
+    x = np.zeros(len(airlines))
+    try:
+        index = airlines.index(row['airline'])
+        x[index] = 1
+    except ValueError:
+        pass
+    return x
 
 def compute_metrics(labels_test, labels_pred):
     acc = sum([int(x == y) for x, y in zip(labels_test, labels_pred)]) / float(len(labels_test))

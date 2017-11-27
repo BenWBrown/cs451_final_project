@@ -1,5 +1,4 @@
 import numpy as np
-#useless comment
 
 class DecisionTree:
     def __init__(self):
