@@ -71,6 +71,9 @@ def vectorize(text):
     #TODO
     return np.ones(3) * 2
 
+#extract features to send to decision tree
+
+
 def extract_airline(row):
     airlines = ['Virgin America', 'United', 'Southwest', 'Delta', 'US Airways', 'American']
     x = np.zeros(len(airlines))
