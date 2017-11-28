@@ -39,17 +39,14 @@ class DecisionTree:
 
     def split(self, attr, value, data):
         """takes in an attribute and a value to split the data"""
-        #Should we be making 3 splits or 2?
-        left, center, right = list(), list(), list()
+        left, right = list(), list()
 
         for entry in data:
-            if entry[attr] < value:
+            if entry[attr] <= value:
                 left.append(entry)
-            elif entry[attr] == value:
-                center.append(entry)
             else:
                 right.append(entry)
-        return left, center, right
+        return left, right
 
     def get_split(self, data):
         """finds the best split point for the dataset"""
