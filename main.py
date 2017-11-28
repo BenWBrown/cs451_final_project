@@ -66,7 +66,7 @@ def readfile(word_list):
             x, y = extract_features(row, word_list)
             data.append(x)
             labels.append(y)
-        print (data[0])
+        #print (data[0])
     return (data,labels)
 
 def extract_features(row, word_list):
@@ -95,10 +95,6 @@ def vectorize(text, word_list):
     """vectorizes tweet text into a numpy array.
     This function is independent of the dataset"""
     return np.array( [float(word in text.split()) for word in word_list] )
-
-
-#extract features to send to decision tree
-
 
 def extract_airline(row):
     airlines = ['Virgin America', 'United', 'Southwest', 'Delta', 'US Airways', 'American']
