@@ -119,7 +119,7 @@ class DecisionTree:
                 temp_gini = 0
                 total_size = sum([len(segment) for segment in segments])
                 for segment in segments:
-                    temp_gini += (1.0 - self.gini(segment)) * (len(segment) / total_size)
+                    temp_gini += self.gini(segment) * (len(segment) / float(total_size))
                 if temp_gini < best_gini:
                     best_split = feat_index
                     best_value = entry[0][feat_index]
@@ -140,5 +140,7 @@ class DecisionTree:
 
 if __name__ == "__main__":
     tree = DecisionTree()
-    test_labels = np.array([(123, 1),(235423, 1),(1231, 0),(12341,0)])
-    print (tree.gini(test_labels))
+    test_data = [ (np.array([1, 2]), 0) ,(np.array([0, 2]), 0) ]
+    split = tree.get_split(test_data)
+
+    print (split)
