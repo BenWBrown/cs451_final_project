@@ -61,7 +61,7 @@ class DecisionTree:
         return 1 - s
 
     def build_tree(self, combined_data, max_depth):
-    """builds the decision tree"""        
+        """builds the decision tree"""        
         if max_depth <= 0:
             return self.terminal(combined_data)
         split = self.get_split(combined_data)
