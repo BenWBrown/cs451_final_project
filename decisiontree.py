@@ -35,16 +35,14 @@ class DecisionTree:
             predictions.append(self.predict_vector(self.root, vector))
         return predictions
 
-
-    @staticmethod
-    def predict_vector(node, vector):
+    def predict_vector(self, node, vector):
         """predicts label for given vector"""
         if node["terminal"]:
             return node["label"]
         if vector[node["attr"]] < node["value"]:
-            return self.predict_vector(node["left"])
+            return self.predict_vector(node["left"], vector)
         else:
-            return self.predict_vector(node["right"])
+            return self.predict_vector(node["right"], vector)
 
 
     def gini(self, segment):
@@ -61,7 +59,7 @@ class DecisionTree:
         return 1 - s
 
     def build_tree(self, combined_data, max_depth):
-    """builds the decision tree"""        
+        """builds the decision tree"""
         if max_depth <= 0:
             return self.terminal(combined_data)
         split = self.get_split(combined_data)
@@ -79,8 +77,7 @@ class DecisionTree:
                 "attr": split["attr"],
                 "value": split["value"]}
 
-    @staticmethod
-    def most_frequent_label(combined_data):
+    def most_frequent_label(self, combined_data):
         """select the most common label (positive, neutral, or negative) from
         a segment of data assigned to terminal nodes"""
         labels = [x[1] for x in combined_data]
@@ -88,7 +85,8 @@ class DecisionTree:
 
     def split(self, attr, value, data):
         """takes in an attribute and a value to split the data"""
-        left, right = list(), list()
+        left = list()
+        right = list()
 
         for entry in data:
             # print(entry)
@@ -110,7 +108,12 @@ class DecisionTree:
         best_segments = None
 
         for feat_index in tqdm(range(len(data[0][0]) - 1)):
-            for entry in random.sample(data, self.k):
+            if (len(data) > self.k):
+                sample = random.sample(data, self.k)
+            else:
+                sample = data
+
+            for entry in sample:
                 #split(attr, value, data)
                 segments = self.split(feat_index, entry[0][feat_index], data)
                 temp_gini = 0
