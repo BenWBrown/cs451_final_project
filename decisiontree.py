@@ -38,6 +38,7 @@ class DecisionTree:
 
     @staticmethod
     def predict_vector(node, vector):
+        """predicts label for given vector"""
         if node["terminal"]:
             return node["label"]
         if vector[node["attr"]] < node["value"]:
@@ -47,7 +48,7 @@ class DecisionTree:
 
 
     def gini(self, segment):
-
+        """computes the Gini impurity"""
         segment_labels = []
         for element in segment:
             segment_labels.append(element[1])
@@ -60,6 +61,7 @@ class DecisionTree:
         return 1 - s
 
     def build_tree(self, combined_data, max_depth):
+    """builds the decision tree"""        
         if max_depth <= 0:
             return self.terminal(combined_data)
         split = self.get_split(combined_data)
@@ -68,8 +70,8 @@ class DecisionTree:
         print (len(split['segments'][1]))
         if len(split["segments"][0]) < self.min_terminal_size or len(split["segments"][1]) < self.min_terminal_size:
             return self.terminal(combined_data)
-        left = build_tree(split["segments"][0], max_depth-1)
-        right = build_tree(split["segments"][1], max_depth-1)
+        left = self.build_tree(split["segments"][0], max_depth-1)
+        right = self.build_tree(split["segments"][1], max_depth-1)
         return {"terminal": False,
                 "label": None,
                 "right": right,
@@ -79,6 +81,8 @@ class DecisionTree:
 
     @staticmethod
     def most_frequent_label(combined_data):
+        """select the most common label (positive, neutral, or negative) from
+        a segment of data assigned to terminal nodes"""
         labels = [x[1] for x in combined_data]
         return max(set(labels), key=labels.count)
 
@@ -121,7 +125,7 @@ class DecisionTree:
         return {'attr' : best_split, 'value' : best_value, 'segments' : best_segments}
 
     def terminal(self, data):
-        """ helpful docstring """
+        """creates a terminal node"""
         return {"terminal": True,
                 "label": self.most_frequent_label(data),
                 "right": None,
