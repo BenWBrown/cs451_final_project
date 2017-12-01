@@ -46,12 +46,10 @@ def create_words(num_words=50):
             reader = csv.DictReader(tweets)
             for row in reader:
                 for word in row['text'].strip().split():
-                    #print(row['airline_sentiment'])
-                    #print(word) 
-                    #TODO: make all words lowercase
-                    #TODO: strip commas, exclamations, periods, etc. from each word
+                    word = word.lower()
+                    word = "".join(c for c in word if c not in ('!','.',',', '?')) # https://stackoverflow.com/questions/16050952/how-to-remove-all-the-punctuation-in-a-string-python
                     label = row['airline_sentiment']
-
+                    
                     # Positive labels
                     if word in positive.keys():
                         if (label == 'positive'):
@@ -95,20 +93,20 @@ def create_words(num_words=50):
     positive_multiplier = 3
     neutral_multiplier = 3
     negative_multiplier = 3
-    min_words = 10
 
-    for word in positive:            
-        if ((positive[word] >= positive_multiplier * negative[word]) and (positive[word] >= positive_multiplier * neutral[word])) and ((negative[word] != 0 and neutral[word] != 0) or positive[word] > min_words):              
+    min_freq = 10
+    
+    for word in positive:
+        if ((positive[word] >= positive_multiplier * negative[word]) and (positive[word] >= positive_multiplier * neutral[word])) and ((negative[word] != 0 and neutral[word] != 0) or positive[word] > min_freq):              
             positive_list.append(word)
     for word in neutral:
 #        print(word,"(neutral):", neutral[word])
 #        print(word,"(negative):", negative[word])
-        if ((neutral[word] >= neutral_multiplier * negative[word]) and (neutral[word] >= neutral_multiplier * positive[word])) and ((negative[word] != 0 and positive[word] != 0) or neutral[word] > min_words):
+        if ((neutral[word] >= neutral_multiplier * negative[word]) and (neutral[word] >= neutral_multiplier * positive[word])) and ((negative[word] != 0 and positive[word] != 0) or neutral[word] > min_freq):
             neutral_list.append(word)
     for word in negative:
-        if ((negative[word] >= negative_multiplier * positive[word]) and (negative[word] >= negative_multiplier * neutral[word])) and ((neutral[word] != 0 and positive[word] != 0) or negative[word] > min_words):
+        if ((negative[word] >= negative_multiplier * positive[word]) and (negative[word] >= negative_multiplier * neutral[word])) and ((neutral[word] != 0 and positive[word] != 0) or negative[word] > min_freq):
             negative_list.append(word)
-
 
     word_list = positive_list + neutral_list + negative_list
     with open(word_file, 'w') as f:
