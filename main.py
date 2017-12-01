@@ -32,24 +32,85 @@ def main():
     labels_pred = tree.predict(data_test)
     compute_metrics(labels_test, labels_pred)
 
-def create_words(num_words=200):
+def create_words(num_words=50):
     """if it exists, opens wordfile. Otherwise, creates words and writes to wordfile """
     if (os.path.isfile(word_file)):
         return open(word_file).read().strip().split('\n')
+    else:
+        positive = {}
+        neutral = {}
+        negative = {}
+        
+        #words = {}
+        with open(data_file) as tweets:
+            reader = csv.DictReader(tweets)
+            for row in reader:
+                for word in row['text'].strip().split():
+                    #print(row['airline_sentiment'])
+                    #print(word) 
+                    #TODO: make all words lowercase
+                    #TODO: strip commas, exclamations, periods, etc. from each word
+                    label = row['airline_sentiment']
 
-    words = {}
-    with open(data_file) as tweets:
-        reader = csv.DictReader(tweets)
-        for row in reader:
-            for word in row['text'].strip().split():
-                try:
-                    words[word] += 1
-                except:
-                    words[word] = 1
+                    # Positive labels
+                    if word in positive.keys():
+                        if (label == 'positive'):
+                            positive[word] += 1
+                        else:
+                            pass
+                    else:
+                        if (label == 'positive'):
+                            positive[word] = 1
+                        else:
+                            positive[word] = 0
+                         
+                    # Neutral labels
+                    if word in neutral.keys():
+                        if (label == 'neutral'):
+                            neutral[word] += 1
+                        else:
+                            pass
+                    else:
+                        if (label == 'neutral'):
+                            neutral[word] = 1
+                        else:
+                            neutral[word] = 0
+                    
+                    # Negative labels
+                    if word in negative.keys():
+                        if (label == 'negative'):
+                            negative[word] += 1
+                        else:
+                            pass
+                    else:
+                        if (label == 'negative'):
+                            negative[word] = 1
+                        else:
+                            negative[word] = 0
 
-    word_list = [word[0] for word in sorted(words.items(), key=lambda x: x[1], reverse=True)][:num_words]
-    # print ([word for word in sorted(words.items(), key=lambda x: x[1], reverse=True)][:100])
-    #sort list
+    positive_list = []
+    neutral_list = []
+    negative_list = []
+    
+    positive_multiplier = 3
+    neutral_multiplier = 3
+    negative_multiplier = 3
+    min_words = 10
+
+    for word in positive:            
+        if ((positive[word] >= positive_multiplier * negative[word]) and (positive[word] >= positive_multiplier * neutral[word])) and ((negative[word] != 0 and neutral[word] != 0) or positive[word] > min_words):              
+            positive_list.append(word)
+    for word in neutral:
+#        print(word,"(neutral):", neutral[word])
+#        print(word,"(negative):", negative[word])
+        if ((neutral[word] >= neutral_multiplier * negative[word]) and (neutral[word] >= neutral_multiplier * positive[word])) and ((negative[word] != 0 and positive[word] != 0) or neutral[word] > min_words):
+            neutral_list.append(word)
+    for word in negative:
+        if ((negative[word] >= negative_multiplier * positive[word]) and (negative[word] >= negative_multiplier * neutral[word])) and ((neutral[word] != 0 and positive[word] != 0) or negative[word] > min_words):
+            negative_list.append(word)
+
+
+    word_list = positive_list + neutral_list + negative_list
     with open(word_file, 'w') as f:
         f.writelines(["%s\n" % item  for item in word_list])
     return word_list
