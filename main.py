@@ -47,7 +47,7 @@ def create_words(num_words=50):
             for row in reader:
                 for word in row['text'].strip().split():
                     word = word.lower()
-                    word = "".join(c for c in word if c not in ('!','.',',', '?','"', "'", "@")) # https://stackoverflow.com/questions/16050952/how-to-remove-all-the-punctuation-in-a-string-python
+                    word = "".join(c for c in word if c not in ('!','.',',', '?','"', "'")) # https://stackoverflow.com/questions/16050952/how-to-remove-all-the-punctuation-in-a-string-python
                     label = row['airline_sentiment']
                     
                     # Positive labels

@@ -12,12 +12,12 @@ welcome
 strong
 wonderful
 mission
+:-)
 thank
 amazing
 rock
 raise
 excited
-:-)
 replying
 excellent
 #22
@@ -28,8 +28,8 @@ safely
 spring
 saving
 😂
-jetblues
 kelly
+@jetblues
 david
 interest
 photo
@@ -47,6 +47,7 @@ fleets
 august
 787
 among
+“@jetblue:
 dal
 incentive
 national
@@ -56,7 +57,6 @@ ios
 appease
 battles
 discount
-“jetblue:
 nj
 hawaii
 touchdown
@@ -66,7 +66,6 @@ four
 hanging
 tired
 here
-ground
 spoke
 until
 90
@@ -119,7 +118,7 @@ bna
 has
 right
 people
-aspen
+multiple
 for
 losing
 constantly
@@ -139,6 +138,7 @@ exact
 minute
 leave
 sign
+ground
 along
 30+
 working
@@ -147,12 +147,10 @@ anything
 originally
 such
 suck
-times
+cannot
 sf
 unacceptable
 years
-louisville
-americanair
 arriving
 seriously
 internet
@@ -168,7 +166,6 @@ sat
 take
 knew
 drive
-outside
 going
 freezing
 worried
@@ -190,7 +187,7 @@ philadelphia
 2/19
 complete
 with
-gone
+engine
 an
 at
 watched
@@ -201,10 +198,10 @@ original
 caused
 tv
 to
-pilot
 case
 returned
 checkin
+@united
 large
 small
 past
@@ -217,6 +214,7 @@ more
 door
 company
 learn
+pick
 sense
 plane
 reminded
@@ -297,7 +295,6 @@ should
 handle
 means
 stuff
-packed
 etc
 cc
 ca
@@ -344,6 +341,7 @@ forced
 rescheduling
 hrs
 preferred
+w/o
 w/
 away
 unable
@@ -354,6 +352,7 @@ catering
 air
 mistake
 confirmed
+arent
 hang
 hand
 kept
@@ -363,7 +362,6 @@ board
 theyre
 night
 security
-phlairport
 /
 asking
 pls
@@ -410,11 +408,11 @@ message
 checked
 carousel
 flighted
+packed
 online
 price
 forever
 only
-cannot
 isnt
 husband
 3
@@ -439,11 +437,11 @@ trying
 moved
 poor
 answers
-arent
 family
 teach
 answered
 taken
+@delta
 tried
 rude
 a
@@ -467,6 +465,7 @@ wasnt
 philly
 useless
 towards
+$7
 flightd
 flightr
 feels
@@ -504,12 +503,14 @@ started
 :-(
 control
 located
+fare
 including
 hands
 front
 entertainment
 rebook
 completely
+times
 quality
 management
 providing
@@ -569,7 +570,6 @@ don’t
 seen
 seem
 mins
-usairways
 explain
 stop
 bay
@@ -625,7 +625,6 @@ maybe
 switch
 lunch
 3rd
-mess
 ord
 where
 thing
@@ -688,6 +687,7 @@ personnel
 important
 u
 resolution
+@southwestair:
 children
 sitting
 difference
@@ -700,7 +700,6 @@ airport
 itll
 destination
 two
-expedia
 landed
 none
 hour
@@ -738,6 +737,7 @@ fine
 find
 8
 weve
+@united:
 aircraft
 point
 simply
@@ -782,7 +782,6 @@ wedding
 mention
 day
 airports
-w/o
 re:
 sadly
 explanation
@@ -797,11 +796,11 @@ deliver
 joke
 trips
 otherwise
+gone
 as
 frustrating
 almost
 #ewr
-southwestair:
 thought
 executive
 seats
@@ -811,6 +810,7 @@ screwed
 dca
 &amp;
 about
+louisville
 doesnt
 buy
 bus
@@ -819,11 +819,10 @@ flightly
 bug
 minutes
 45
-united:
 sleep
 hate
+@
 every
-ps
 rebooked
 luggage
 leaves
@@ -840,6 +839,7 @@ my
 end
 gate
 charging
+mess
 over
 london
 clt
@@ -870,7 +870,6 @@ catch
 n
 dept
 several
-pick
 mother
 1hr
 departed
@@ -924,14 +923,16 @@ gives
 released
 unfortunately
 cards
-multiple
+aspen
 written
 horrible
 connections
 fails
+outside
 arrival
 20
 60
+pilot
 paying
 myself
 week
@@ -953,6 +954,7 @@ hasnt
 announcements
 calls
 wife
+wifi
 all
 lack
 program
@@ -962,11 +964,11 @@ far
 worst
 awful
 and
+@tsa
 lisa
 tel
 what
 options
-wifi
 knows
 bumped
 basically
@@ -988,7 +990,6 @@ hangs
 attendants
 option
 hotel
-$7
 double
 finding
 inconvenience
@@ -998,6 +999,7 @@ nothing
 hit
 #unitedairlines
 numerous
+ps
 pa
 pm
 flight
@@ -1017,9 +1019,9 @@ once
 bdl
 waiting
 degree
-engine
 app
 anywhere
+@usairways
 tag
 united
 usair
@@ -1032,6 +1034,7 @@ straight
 destinations
 priority
 their
+@americanair
 which
 who
 why
@@ -1058,5 +1061,6 @@ transfer
 kidding
 volume
 automated
+@phlairport
 other
 sick
