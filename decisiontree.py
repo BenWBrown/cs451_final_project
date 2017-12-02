@@ -40,7 +40,7 @@ class DecisionTree:
         """predicts label for given vector"""
         if node["terminal"]:
             return node["label"]
-        if vector[node["attr"]] < node["value"]:
+        if vector[node["attr"]] <= node["value"]:
             return self.predict_vector(node["left"], vector)
         else:
             return self.predict_vector(node["right"], vector)
@@ -84,6 +84,9 @@ class DecisionTree:
                 "left": left,
                 "attr": split["attr"],
                 "value": split["value"]}
+
+    def print_tree(self):
+        print(self.root)
 
     def most_frequent_label(self, combined_data):
         """select the most common label (positive, neutral, or negative) from

@@ -24,6 +24,24 @@ test_size = 0.3
 word_file = 'words.txt'
 
 def main():
+
+
+    #debugging stuff
+    # fake_data = [
+    # [1, 2, 1, 1],
+    # [1, 2, 1, 1],
+    # [1, 3 , 0, 1],
+    # [1, 3, 0, 0]
+    # ]
+    # fake_data = [np.array(x) for x in fake_data]
+    # fake_labels = [0, 0, 1, 1]
+    #
+    # tree = DecisionTree()
+    # tree.train(fake_data, fake_labels)
+    # labels_pred = tree.predict([np.array([1, 1, 0, 1]), np.array([1, 2, 0, 1]), np.array([1, 3, 0, 1]), np.array([1, 4, 0, 1])])
+    # print(labels_pred)
+    # tree.print_tree()
+
     word_list = create_words()
 
     data, labels = readfile(word_list)
@@ -72,11 +90,7 @@ def create_words(num_words=50):
             for row in reader:
                 for word in row['text'].strip().split():
                     word = word.lower()
-<<<<<<< HEAD
-                    word = "".join(c for c in word if c not in ('!','.',',', '?', '"')) # https://stackoverflow.com/questions/16050952/how-to-remove-all-the-punctuation-in-a-string-python
-=======
                     word = "".join(c for c in word if c not in ('!','.',',', '?','"', "'")) # https://stackoverflow.com/questions/16050952/how-to-remove-all-the-punctuation-in-a-string-python
->>>>>>> ebe5e2ea0748bc302e615b9b913ceae4188b6d58
                     label = row['airline_sentiment']
 
                     # Positive labels
