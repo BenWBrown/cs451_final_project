@@ -13,7 +13,10 @@ code that imports our decision tree, trains it on a dataset, then tests on a val
 import csv, os
 import numpy as np
 from sklearn.model_selection import train_test_split
+from sklearn.tree import DecisionTreeClassifier
 from decisiontree import DecisionTree
+from sklearn import linear_model
+from sklearn.svm import SVC
 
 #globals
 data_file = 'Tweets.csv'
@@ -32,6 +35,28 @@ def main():
     labels_pred = tree.predict(data_test)
     compute_metrics(labels_test, labels_pred)
 
+
+    ## Looking at other algorithm's performance on the dataset
+
+    # tree2 = DecisionTreeClassifier(max_depth = 10, min_samples_leaf = 5)
+    #tree2 = DecisionTreeClassifier()
+    # tree2.fit(data_train, labels_train)
+    # labels_pred2 = tree2.predict(data_test)
+    # print(list(set(labels_pred2)))
+
+    # logreg = linear_model.LogisticRegression(C=1e5)
+    # logreg.fit(data_train, labels_train)
+    # labels_pred3 = logreg.predict(data_test)
+    #
+    # clf = SVC()
+    # svmmodel = clf.fit(data_train, labels_train)
+    # labels_pred4 = svmmodel.predict(data_test)
+    #
+    #
+    # compute_metrics(labels_test,labels_pred2)
+    # compute_metrics(labels_test,labels_pred3)
+    # compute_metrics(labels_test,labels_pred4)
+
 def create_words(num_words=50):
     """if it exists, opens wordfile. Otherwise, creates words and writes to wordfile """
     if (os.path.isfile(word_file)):
@@ -40,16 +65,16 @@ def create_words(num_words=50):
         positive = {}
         neutral = {}
         negative = {}
-        
+
         #words = {}
         with open(data_file) as tweets:
             reader = csv.DictReader(tweets)
             for row in reader:
                 for word in row['text'].strip().split():
                     word = word.lower()
-                    word = "".join(c for c in word if c not in ('!','.',',', '?')) # https://stackoverflow.com/questions/16050952/how-to-remove-all-the-punctuation-in-a-string-python
+                    word = "".join(c for c in word if c not in ('!','.',',', '?', '"')) # https://stackoverflow.com/questions/16050952/how-to-remove-all-the-punctuation-in-a-string-python
                     label = row['airline_sentiment']
-                    
+
                     # Positive labels
                     if word in positive.keys():
                         if (label == 'positive'):
@@ -61,7 +86,7 @@ def create_words(num_words=50):
                             positive[word] = 1
                         else:
                             positive[word] = 0
-                         
+
                     # Neutral labels
                     if word in neutral.keys():
                         if (label == 'neutral'):
@@ -73,7 +98,7 @@ def create_words(num_words=50):
                             neutral[word] = 1
                         else:
                             neutral[word] = 0
-                    
+
                     # Negative labels
                     if word in negative.keys():
                         if (label == 'negative'):
@@ -89,15 +114,15 @@ def create_words(num_words=50):
     positive_list = []
     neutral_list = []
     negative_list = []
-    
+
     positive_multiplier = 3
     neutral_multiplier = 3
     negative_multiplier = 3
 
-    min_freq = 10
-    
+    min_freq = 30
+
     for word in positive:
-        if ((positive[word] >= positive_multiplier * negative[word]) and (positive[word] >= positive_multiplier * neutral[word])) and ((negative[word] != 0 and neutral[word] != 0) or positive[word] > min_freq):              
+        if ((positive[word] >= positive_multiplier * negative[word]) and (positive[word] >= positive_multiplier * neutral[word])) and ((negative[word] != 0 and neutral[word] != 0) or positive[word] > min_freq):
             positive_list.append(word)
     for word in neutral:
 #        print(word,"(neutral):", neutral[word])

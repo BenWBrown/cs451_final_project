@@ -4,9 +4,9 @@ import random
 
 class DecisionTree:
 
-    max_depth = 4
+    max_depth = 10
     min_terminal_size = 5
-    k = 100
+    k = 10
 
     def __init__(self, **kwargs):
         self.root = None
@@ -28,11 +28,12 @@ class DecisionTree:
 
     def predict(self, data):
         """predicts labels for given data"""
-        if self.root is None:
-            return [0] * len(data)
+        # if self.root is None:
+        #     return [0] * len(data)
         predictions = []
         for vector in data:
             predictions.append(self.predict_vector(self.root, vector))
+        print(list(set(predictions)))
         return predictions
 
     def predict_vector(self, node, vector):
@@ -52,9 +53,16 @@ class DecisionTree:
             segment_labels.append(element[1])
 
         s = 0
+        length = float(len(segment_labels))
+
         for label in self.label_list:
             if len(segment_labels)!= 0:
-                p_i = sum([int(label == x) for x in segment_labels ]) / float(len(segment_labels))
+                p_i = 0
+                for x in segment_labels:
+                    p_i += int(label == x)
+
+                p_i /= length
+
                 s += p_i ** 2
         return 1 - s
 
