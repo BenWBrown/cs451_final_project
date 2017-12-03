@@ -15,6 +15,7 @@ import numpy as np
 from sklearn.model_selection import train_test_split
 from sklearn.tree import DecisionTreeClassifier
 from decisiontree import DecisionTree
+from sklearn.ensemble import RandomForestClassifier
 from sklearn import linear_model
 from sklearn.svm import SVC
 
@@ -26,7 +27,7 @@ word_file = 'words.txt'
 def main():
 
 
-    #debugging stuff
+    ##debugging stuff##
     # fake_data = [
     # [1, 2, 1, 1],
     # [1, 2, 1, 1],
@@ -45,19 +46,21 @@ def main():
     word_list = create_words()
 
     data, labels = readfile(word_list)
-    tree = DecisionTree() #todo: some sort of hyper-params
+    tree = DecisionTree() 
     data_train, data_test, labels_train, labels_test = \
         train_test_split(data, labels, test_size=test_size, random_state=42)
 
+    ## calls our tree algorithm and prediction method ##
     tree.train(data_train, labels_train)
     labels_pred = tree.predict(data_test)
     compute_metrics(labels_test, labels_pred)
 
 
-    ## Looking at other algorithm's performance on the dataset
+
+    ## Looking at other algorithm's performance on the dataset ##
 
     # tree2 = DecisionTreeClassifier(max_depth = 10, min_samples_leaf = 5)
-    #tree2 = DecisionTreeClassifier()
+    #tree2 = DecisionTreeClassifier() #not providing any params
     # tree2.fit(data_train, labels_train)
     # labels_pred2 = tree2.predict(data_test)
     # print(list(set(labels_pred2)))
@@ -74,6 +77,12 @@ def main():
     # compute_metrics(labels_test,labels_pred2)
     # compute_metrics(labels_test,labels_pred3)
     # compute_metrics(labels_test,labels_pred4)
+
+    ## Random Forest ##
+    # clf2 = RandomForestClassifier(max_depth=10, random_state=0)
+    # clf2.fit(data_train, labels_train)
+    # labels_pred5 = clf2.predict(data_test)
+    # compute_metrics(labels_test, labels_pred5)
 
 def create_words(num_words=50):
     """if it exists, opens wordfile. Otherwise, creates words and writes to wordfile """

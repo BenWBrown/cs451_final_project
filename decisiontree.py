@@ -6,13 +6,11 @@ class DecisionTree:
 
     max_depth = 10
     min_terminal_size = 5
-    k = 10
+    k = 100
 
     def __init__(self, **kwargs):
         self.root = None
-        #for all default hyperparams
-        #TODO: SET OTHER HYPERPARAMS
-        self.label_list = [-1, 0, 1] #TODO: GET RID OF THIS LOL
+        self.label_list = [-1, 0, 1]
         try:
             self.max_depth = kwargs['max_depth']
         except:
