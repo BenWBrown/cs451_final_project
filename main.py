@@ -7,7 +7,6 @@ Professor Scharstein
 CSCI 0451
 December 8, 2017
 
-code that imports our decision tree, trains it on a dataset, then tests on a validation set
 """
 
 import csv, os
@@ -26,23 +25,6 @@ word_file = 'words.txt'
 
 def main():
 
-
-    ##debugging stuff##
-    # fake_data = [
-    # [1, 2, 1, 1],
-    # [1, 2, 1, 1],
-    # [1, 3 , 0, 1],
-    # [1, 3, 0, 0]
-    # ]
-    # fake_data = [np.array(x) for x in fake_data]
-    # fake_labels = [0, 0, 1, 1]
-    #
-    # tree = DecisionTree()
-    # tree.train(fake_data, fake_labels)
-    # labels_pred = tree.predict([np.array([1, 1, 0, 1]), np.array([1, 2, 0, 1]), np.array([1, 3, 0, 1]), np.array([1, 4, 0, 1])])
-    # print(labels_pred)
-    # tree.print_tree()
-
     word_list = create_words()
 
     data, labels = readfile(word_list)
@@ -53,38 +35,37 @@ def main():
     ## calls our tree algorithm and prediction method ##
     tree.train(data_train, labels_train)
     labels_pred = tree.predict(data_test)
-    compute_metrics(labels_test, labels_pred)
-
+    compute_accuracy(labels_test, labels_pred)
 
 
     ## Looking at other algorithm's performance on the dataset ##
 
-    # tree2 = DecisionTreeClassifier(max_depth = 10, min_samples_leaf = 5)
-    #tree2 = DecisionTreeClassifier() #not providing any params
-    # tree2.fit(data_train, labels_train)
-    # labels_pred2 = tree2.predict(data_test)
-    # print(list(set(labels_pred2)))
+#    tree2 = DecisionTreeClassifier(max_depth = 10, min_samples_leaf = 5)
+#    # tree2 = DecisionTreeClassifier() #not providing any params
+#    tree2.fit(data_train, labels_train)
+#    labels_pred2 = tree2.predict(data_test)
+#    print(list(set(labels_pred2)))
 
-    # logreg = linear_model.LogisticRegression(C=1e5)
-    # logreg.fit(data_train, labels_train)
-    # labels_pred3 = logreg.predict(data_test)
-    #
-    # clf = SVC()
-    # svmmodel = clf.fit(data_train, labels_train)
-    # labels_pred4 = svmmodel.predict(data_test)
-    #
-    #
-    # compute_metrics(labels_test,labels_pred2)
-    # compute_metrics(labels_test,labels_pred3)
-    # compute_metrics(labels_test,labels_pred4)
+#    logreg = linear_model.LogisticRegression(C=1e5)
+#    logreg.fit(data_train, labels_train)
+#    labels_pred3 = logreg.predict(data_test)
+#    
+#    clf = SVC()
+#    svmmodel = clf.fit(data_train, labels_train)
+#    labels_pred4 = svmmodel.predict(data_test)
+    
+    
+#    compute_accuracy(labels_test,labels_pred2)
+#    compute_accuracy(labels_test,labels_pred3)
+#    compute_accuracy(labels_test,labels_pred4)
 
-    ## Random Forest ##
-    # clf2 = RandomForestClassifier(max_depth=10, random_state=0)
-    # clf2.fit(data_train, labels_train)
-    # labels_pred5 = clf2.predict(data_test)
-    # compute_metrics(labels_test, labels_pred5)
+    # Random Forest ##
+#    clf2 = RandomForestClassifier(n_estimators=1000, max_depth=10, random_state=0, min_samples_leaf=5)
+#    clf2.fit(data_train, labels_train)
+#    labels_pred5 = clf2.predict(data_test)
+#    compute_accuracy(labels_test, labels_pred5)
 
-def create_words(num_words=50):
+def create_words():
     """if it exists, opens wordfile. Otherwise, creates words and writes to wordfile """
     if (os.path.isfile(word_file)):
         return open(word_file).read().strip().split('\n')
@@ -93,7 +74,6 @@ def create_words(num_words=50):
         neutral = {}
         negative = {}
 
-        #words = {}
         with open(data_file) as tweets:
             reader = csv.DictReader(tweets)
             for row in reader:
@@ -152,8 +132,6 @@ def create_words(num_words=50):
         if ((positive[word] >= positive_multiplier * negative[word]) and (positive[word] >= positive_multiplier * neutral[word])) and ((negative[word] != 0 and neutral[word] != 0) or positive[word] > min_occurrences):
             positive_list.append(word)
     for word in neutral:
-#        print(word,"(neutral):", neutral[word])
-#        print(word,"(negative):", negative[word])
         if ((neutral[word] >= neutral_multiplier * negative[word]) and (neutral[word] >= neutral_multiplier * positive[word])) and ((negative[word] != 0 and positive[word] != 0) or neutral[word] > min_occurrences):
             neutral_list.append(word)
     for word in negative:
@@ -178,7 +156,6 @@ def readfile(word_list):
             x, y = extract_features(row, word_list)
             data.append(x)
             labels.append(y)
-        #print (data[0])
     return (data,labels)
 
 def extract_features(row, word_list):
@@ -186,7 +163,6 @@ def extract_features(row, word_list):
     label = extract_label(row)
     text = extract_text(row)
     data = vectorize(text, word_list)
-
     airline_data = extract_airline(row)
     data = np.append(airline_data, data)
 
@@ -209,7 +185,9 @@ def vectorize(text, word_list):
     return np.array( [float(word in text.split()) for word in word_list] )
 
 def extract_airline(row):
-    airlines = ['Virgin America', 'United', 'Southwest', 'Delta', 'US Airways', 'American']
+    """extracts the airline from a data row"""
+    airlines = ['Virgin America', 'United', 'Southwest', 
+                'Delta', 'US Airways', 'American']
     x = np.zeros(len(airlines))
     try:
         index = airlines.index(row['airline'])
@@ -218,7 +196,8 @@ def extract_airline(row):
         pass
     return x
 
-def compute_metrics(labels_test, labels_pred):
+def compute_accuracy(labels_test, labels_pred):
+    """computes the accuracy"""
     acc = sum([int(x == y) for x, y in zip(labels_test, labels_pred)]) / float(len(labels_test))
     print ("Accuracy: {}".format(acc))
 

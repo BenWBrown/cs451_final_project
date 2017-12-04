@@ -21,17 +21,12 @@ class DecisionTree:
         self.label_list = list(set(labels))
         combined_data = list(zip(data, labels))
         self.root = self.build_tree(combined_data, self.max_depth)
-        #print(self.gini(combined_data))
-        #get_split(self, combined_data)
 
     def predict(self, data):
         """predicts labels for given data"""
-        # if self.root is None:
-        #     return [0] * len(data)
         predictions = []
         for vector in data:
             predictions.append(self.predict_vector(self.root, vector))
-        print(list(set(predictions)))
         return predictions
 
     def predict_vector(self, node, vector):
@@ -69,9 +64,6 @@ class DecisionTree:
         if max_depth <= 0:
             return self.terminal(combined_data)
         split = self.get_split(combined_data)
-        print (split.keys())
-        print (len(split['segments'][0]))
-        print (len(split['segments'][1]))
         if len(split["segments"][0]) < self.min_terminal_size or len(split["segments"][1]) < self.min_terminal_size:
             return self.terminal(combined_data)
         left = self.build_tree(split["segments"][0], max_depth-1)
@@ -82,9 +74,6 @@ class DecisionTree:
                 "left": left,
                 "attr": split["attr"],
                 "value": split["value"]}
-
-    def print_tree(self):
-        print(self.root)
 
     def most_frequent_label(self, combined_data):
         """select the most common label (positive, neutral, or negative) from
@@ -98,10 +87,6 @@ class DecisionTree:
         right = list()
 
         for entry in data:
-            # print(entry)
-            # print(attr)
-            # print(entry[0][attr])
-            # print(value)
             if entry[0][attr] <= value:
                 left.append(entry)
             else:
@@ -123,7 +108,6 @@ class DecisionTree:
                 sample = data
 
             for entry in sample:
-                #split(attr, value, data)
                 segments = self.split(feat_index, entry[0][feat_index], data)
                 temp_gini = 0
                 total_size = sum([len(segment) for segment in segments])
@@ -151,5 +135,3 @@ if __name__ == "__main__":
     tree = DecisionTree()
     test_data = [ (np.array([1, 2]), 0) ,(np.array([0, 2]), 0) ]
     split = tree.get_split(test_data)
-
-    print (split)
